@@ -1,66 +1,39 @@
-class Calculadora:
-    def __init__(self):
-        self.numero = int(input("primeiro valor:"))
-        self.numero2 = int(input("segundo valor: "))
+def calcula_potencia(numero, numero2):
+    calculo = numero
+    for i in range(1, numero2):
+        calculo *= numero
+    return calculo
 
 
-    @classmethod
-    def operacao(cls):
-        cls.soma
-
-    @property
-    def soma(self):
-        return self.numero + self.numero2
-
-    @property
-    def subtrai(self):
-        return self.numero - self.numero2
-
-    @property
-    def multiplica(self):
-        return self.numero * self.numero2
-
-    @property
-    def divide(self):
-        return self.numero / self.numero2
-
-    @property
-    def calcula_resto(self):
-        return self.numero % self.numero2
+from functools import reduce
+def calcula_raiz(numero):
+    list =[]
+    for i in range(0, numero):
+        if numero % i == 0:
+            list.append(i)
+    reduce(lambda x, y: x * y, list)
 
 
-#x = Calculadora()
-
-#resultado_soma = x.soma
-#print(resultado_soma)
-valor1 = input("Digite o primeiro valor: ")
-operacao = input("Operação: ")
-valor2 = input("segundo valor: ")
-
-import operator
-
-operacoes = {"+": operator.add,
-             "-": operator.sub,
-             "*": operator.mul,
-             "/": operator.mod,
-            }
-operacoes.get()
-
-print(valor1 + operacao + valor2)
-# numero = int(input("Digite o primeiro número: "))
-# numero2 = int(input("Digite o segundo número: "))
-# operacao = input("Digite a operação que deseja fazer na conta: "
-#
-# "(somar, subtrair, multiplicar, etc)")
-#
-#
-# contas(numero,numero2,operacao)
-#
-# if operacao == "somar": soma(numero, numero2)
-# elif operacao == "subtrair": subtrai(numero, numero2)
-# elif operacao == "multiplicar": multiplica(numero, numero2)
-# elif operacao == "dividir": dividi(numero, numero2)
-# elif operacao == "resto": resto(numero, numero2)
+def operacao_escolhida(operacao):
+    operacoes = {"+": lambda numero, numero2: numero + numero2,
+                 "-": lambda numero, numero2: numero - numero2,
+                 "*": lambda numero, numero2: numero * numero2,
+                 "/": lambda numero, numero2: numero / numero2,
+                 "%": lambda numero, numero2: numero % numero2,
+                 "^": calcula_potencia,
+                 "v": calcula_raiz
+                 }
+    return operacoes.get(operacao)
 
 
-
+desenho_calculadora = [[7, 8, 9, "%", "v"],
+                       [4, 5, 6, "*", "/"],
+                       [1, 2, 3, "^", "-"],
+                       [0, "+", "="]]
+print(desenho_calculadora)
+numero = int(input("Digite o primeiro número: "))
+numero2 = int(input("Digite o segundo número: "))
+operacao = input("Digite a operação que deseja fazer na conta: "
+                 "(+, -, *, /, %, ^, v) ")
+calculo = operacao_escolhida(operacao)
+print(calculo(numero, numero2))
